@@ -296,6 +296,28 @@ PUBLIC void bdev_readblk(buffer_t buf)
 		kpanic("failed to read block from device");
 }
 
+PUBLIC void bdev_readblk_student(buffer_t buf)
+{
+	int err;   /* Error ?        */
+	dev_t dev; /* Device number. */
+	
+	dev = buffer_dev(buf);
+	
+	kprintf("bdev_readblk_student\n");
+	
+	/* Invalid device. */
+	if (bdevsw[MAJOR(dev)] == NULL)
+		kpanic("reading block from invalid device");
+		
+	/* Operation not supported. */
+	if (bdevsw[MAJOR(dev)]->readblkStudent == NULL)
+		kpanic("block device cannot read blocks");
+	
+	/* Read block. */
+	err = bdevsw[MAJOR(dev)]->readblkStudent(MINOR(dev), buf);
+	if (err)
+		kpanic("failed to read block from device");
+}
 /*============================================================================*
  *                                 Devices                                    *
  *============================================================================*/

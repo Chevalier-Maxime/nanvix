@@ -322,6 +322,27 @@ PUBLIC struct buffer *bread(dev_t dev, block_t num)
 	return (buf);
 }
 
+PUBLIC struct buffer *bread_Student(dev_t dev, block_t num)
+{
+	struct buffer *buf;
+	kprintf("bread_Student\n");
+	buf = getblk(dev, num);
+	
+	/* Valid buffer? */
+	if (buf->flags & BUFFER_VALID)
+		return (buf);
+	
+	kprintf("bread_Student valid buffer\n");
+	
+	bdev_readblk_student(buf);
+	
+	/* Update buffer flags. */
+	buf->flags |= BUFFER_VALID;
+	buf->flags &= ~BUFFER_DIRTY;
+	
+	
+	return (buf);
+}
 /**
  * @brief Writes a block buffer to the underlying device.
  * 

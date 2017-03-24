@@ -69,6 +69,7 @@
 	EXTERN void blkunlock(buffer_t);
 	EXTERN void brelse(buffer_t);
 	EXTERN buffer_t bread(dev_t, block_t);
+	EXTERN buffer_t bread_Student(dev_t, block_t);
 	EXTERN void bwrite(buffer_t);
 	EXTERN void buffer_dirty(buffer_t, int);
 	EXTERN void *buffer_data(const_buffer_t);
@@ -244,6 +245,7 @@
 	 * Reads from a regular file.
 	 */
 	EXTERN ssize_t file_read(struct inode *i, void *buf, size_t n, off_t off);
+	EXTERN ssize_t file_read_student(struct inode *i, void *buf, size_t n, off_t off);
 	
 	/*
 	 * Writes to a regular file.

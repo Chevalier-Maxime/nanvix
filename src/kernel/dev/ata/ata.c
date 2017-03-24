@@ -666,6 +666,30 @@ PRIVATE int ata_readblk(unsigned minor, buffer_t buf)
 /*
  * Writes a block to a ATA device.
  */
+PRIVATE int ata_readblk_student(unsigned minor, buffer_t buf)
+{
+	//unsigned flags;     /* Request flags. */
+	struct atadev *dev; /* ATA device.    */
+	
+	/* Invalid minor device. */
+	if (minor >= 4)
+		return (-EINVAL);
+	
+	dev = &ata_devices[minor];
+	
+	/* Device not valid. */
+	if (!(dev->flags & ATADEV_VALID))
+		return (-EINVAL);
+	
+	kprintf("ata_readblk_student\n");
+	
+	ata_sched_buffered(minor, buf, REQ_BUF);
+	
+	return (0);
+}
+/*
+ * Writes a block to a ATA device.
+ */
 PRIVATE int ata_writeblk(unsigned minor, buffer_t buf)
 {
 	unsigned flags;     /* Request flags. */
@@ -846,7 +870,8 @@ PRIVATE const struct bdev ata_ops = {
 	&ata_read,    /* read()     */
 	&ata_write,   /* write()    */
 	&ata_readblk, /* readblk()  */
-	&ata_writeblk /* writeblk() */
+	&ata_writeblk, /* writeblk() */
+	&ata_readblk_student /* writeblk() */
 };
 
 /*
