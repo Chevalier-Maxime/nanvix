@@ -32,7 +32,7 @@
 
 /* Test flags. */
 #define EXTENDED (1 << 0)
-#define FULL     (1 << 1)
+#define FULL     (0 << 1)
 #define VERBOSE  (1 << 2)
 
 /* Test flags. */
@@ -201,14 +201,25 @@ static int io_test_student(void)
 	
 	char *filename = "/sbin/testMax";
 	fd = open(filename,  O_RDWR);
+	if(fd == -1){
+		printf("Erreur ouverture\n");
+		return (0);
+	}
+
 	printf("Read the file\n");
 	/* Read hdd. */
-	int i;
+	int i,j=0;
 	t0 = times(&timing);
 	i= read(fd, buffer, BLOCK_SIZE);
+	printf("%d\n",i);
 	while(i>0){
 		i = read(fd, buffer, BLOCK_SIZE);
+		printf("%d\n",i);
+		j+=swap_test();
+
 	}
+	printf("%d\n",i);
+	printf("%d\n",j);
 	/*for(i=0;i<(TAILLE_FICHIER* sizeof(int))/BLOCK_SIZE;i++){
 		read(fd, buffer, BLOCK_SIZE);
 	}*/
