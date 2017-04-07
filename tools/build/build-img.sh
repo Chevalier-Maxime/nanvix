@@ -114,6 +114,7 @@ function copy_files
 		filename=`basename $file`
 		bin/cp.minix $1 $file /bin/$filename $ROOTUID $ROOTGID
 	done
+
 }
 
 # Build HDD image.

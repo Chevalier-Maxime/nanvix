@@ -18,6 +18,7 @@
  * along with Nanvix. If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include <assert.h>
 #include <nanvix/config.h>
 #include <sys/times.h>
@@ -36,6 +37,8 @@
 
 /* Test flags. */
 static unsigned flags = VERBOSE | FULL;
+
+#define BLOCK_SIZE 1024
 
 /*============================================================================*
  *                               swap_test                                    *
@@ -159,6 +162,62 @@ static int io_test(void)
 	t1 = times(&timing);
 	
 	/* House keeping. */
+	free(buffer);
+	close(fd);
+	
+	/* Print timing statistics. */
+	if (flags & VERBOSE)
+		printf("  Elapsed: %d\n", t1 - t0);
+	
+	return (0);
+}
+
+/**
+ * @brief I/O testing module.
+ * 
+ * @details Reads sequentially the contents of the hard disk
+            to a in-memory buffer.
+ * 
+ * @returns Zero if passed on test, and non-zero otherwise.
+ */
+static int io_test_student(void)
+{
+	int fd;            /* File descriptor.    */
+	struct tms timing; /* Timing information. */
+	clock_t t0, t1;    /* Elapsed times.      */
+	char *buffer;      /* Buffer.             */
+	
+	/* Allocate buffer. */
+	buffer = malloc(MEMORY_SIZE);
+	if (buffer == NULL)
+		exit(EXIT_FAILURE);
+	
+	//printf("Create the file\n");
+	/*Create the file*/
+	/*mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+	char *filename = "/testStudent";
+	fd = creat(filename, mode);
+	close(fd);*/
+	
+	char *filename = "/sbin/testMax";
+	fd = open(filename,  O_RDWR);
+	printf("Read the file\n");
+	/* Read hdd. */
+	int i;
+	t0 = times(&timing);
+	i= read(fd, buffer, BLOCK_SIZE);
+	while(i>0){
+		i = read(fd, buffer, BLOCK_SIZE);
+	}
+	/*for(i=0;i<(TAILLE_FICHIER* sizeof(int))/BLOCK_SIZE;i++){
+		read(fd, buffer, BLOCK_SIZE);
+	}*/
+	
+	/*if (read(fd, buffer, BLOCK_SIZE) != BLOCK_SIZE)
+		exit(EXIT_FAILURE);*/
+	t1 = times(&timing);
+	printf("Fin lecture\n");
+		/* House keeping. */
 	free(buffer);
 	close(fd);
 	
@@ -597,6 +656,13 @@ int main(int argc, char **argv)
 			printf("I/O Test\n");
 			printf("  Result:             [%s]\n", 
 				(!io_test()) ? "PASSED" : "FAILED");
+		}
+		/* I/O test. */
+		else if (!strcmp(argv[i], "ioS"))
+		{
+			printf("I/O Test\n");
+			printf("  Result:             [%s]\n", 
+				(!io_test_student()) ? "PASSED" : "FAILED");
 		}
 		
 		/* Swapping test. */

@@ -336,13 +336,22 @@ PUBLIC struct buffer *bread_Student(dev_t dev, block_t num)
 	
 	bdev_readblk_student(buf);
 	
-	/* Update buffer flags. */
-	buf->flags |= BUFFER_VALID;
-	buf->flags &= ~BUFFER_DIRTY;
+	
 	
 	
 	return (buf);
 }
+
+PUBLIC inline void setValid(struct buffer *buf, int set)
+{
+	buf->flags = (set) ? buf->flags | BUFFER_VALID : buf->flags & ~BUFFER_VALID;
+}
+/*
+ * PUBLIC void setValid(struct buffer *buf){
+		 Update buffer flags. 
+		buf->flags |= BUFFER_VALID;
+		buf->flags &= ~BUFFER_DIRTY;
+}*/
 /**
  * @brief Writes a block buffer to the underlying device.
  * 

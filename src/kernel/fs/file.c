@@ -341,7 +341,7 @@ PUBLIC ssize_t file_read_student(struct inode *i, void *buf, size_t n, off_t off
 		
 	p = buf;
 	
-	kprintf("file_read_student\n");
+	//kprintf("file_read_student\n");
 	
 	inode_lock(i);
 	
@@ -358,7 +358,9 @@ PUBLIC ssize_t file_read_student(struct inode *i, void *buf, size_t n, off_t off
 		bbuf = bread(i->dev, blk);
 		//bread_Student(i->dev, blk);
 		if(blk2 != BLOCK_NULL){
-			brelse(bread_Student(i->dev, blk2));
+			//kprintf("Appel de breadStudent\n");
+			bread_Student(i->dev, blk2);
+			//bread_Student(i->dev, blk2);
 		}
 			
 		blkoff = off % BLOCK_SIZE;

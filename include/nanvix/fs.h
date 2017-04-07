@@ -76,6 +76,7 @@
 	EXTERN dev_t buffer_dev(const_buffer_t);
 	EXTERN block_t buffer_num(const_buffer_t);
 	EXTERN int buffer_is_sync(const_buffer_t);
+	EXTERN void setValid(struct buffer *buf, int set);
 	
 	/**@}*/
 	

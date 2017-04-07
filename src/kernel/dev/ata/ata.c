@@ -962,6 +962,15 @@ PRIVATE void ata_handler(int atadevid)
 			buf[i] = word & 0xff;
 			buf[i + 1] = (word >> 8) & 0xff;
 		}
+		if (req->flags & REQ_BUF)
+		{
+			if(!(req->flags & REQ_SYNC)){
+				kprintf("Remise des flags\n");
+				setValid(req->u.buffered.buf, 1);
+				buffer_dirty(req->u.buffered.buf, 0);
+				brelse(req->u.buffered.buf);
+			}
+		}
 	}
 	
 	/* Process next operation. */
