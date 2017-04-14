@@ -303,7 +303,7 @@ PUBLIC void bdev_readblk_student(buffer_t buf)
 	
 	dev = buffer_dev(buf);
 	
-	kprintf("bdev_readblk_student\n");
+	//kprintf("bdev_readblk_student\n");
 	
 	/* Invalid device. */
 	if (bdevsw[MAJOR(dev)] == NULL)

@@ -208,18 +208,21 @@ static int io_test_student(void)
 
 	printf("Read the file\n");
 	/* Read hdd. */
-	int i,j=0;
+	int i,k,j=0;
 	t0 = times(&timing);
 	i= read(fd, buffer, BLOCK_SIZE);
 	printf("%d\n",i);
 	while(i>0){
 		i = read(fd, buffer, BLOCK_SIZE);
-		printf("%d\n",i);
-		j+=swap_test();
-
+		//printf("%d\n",i);
+		k=1;
+		while(k%1958479){
+			k++;
+		}
+		j+=k;
 	}
-	printf("%d\n",i);
-	printf("%d\n",j);
+	//printf("%d\n",i);
+	//printf("%d\n",j);
 	/*for(i=0;i<(TAILLE_FICHIER* sizeof(int))/BLOCK_SIZE;i++){
 		read(fd, buffer, BLOCK_SIZE);
 	}*/

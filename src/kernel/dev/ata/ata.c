@@ -681,7 +681,7 @@ PRIVATE int ata_readblk_student(unsigned minor, buffer_t buf)
 	if (!(dev->flags & ATADEV_VALID))
 		return (-EINVAL);
 	
-	kprintf("ata_readblk_student\n");
+	//kprintf("ata_readblk_student\n");
 	
 	ata_sched_buffered(minor, buf, REQ_BUF);
 	
@@ -965,7 +965,7 @@ PRIVATE void ata_handler(int atadevid)
 		if (req->flags & REQ_BUF)
 		{
 			if(!(req->flags & REQ_SYNC)){
-				kprintf("Remise des flags\n");
+				//kprintf("Remise des flags\n");
 				setValid(req->u.buffered.buf, 1);
 				buffer_dirty(req->u.buffered.buf, 0);
 				brelse(req->u.buffered.buf);

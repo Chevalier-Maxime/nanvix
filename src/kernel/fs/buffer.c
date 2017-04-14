@@ -325,14 +325,14 @@ PUBLIC struct buffer *bread(dev_t dev, block_t num)
 PUBLIC struct buffer *bread_Student(dev_t dev, block_t num)
 {
 	struct buffer *buf;
-	kprintf("bread_Student\n");
+	//kprintf("bread_Student\n");
 	buf = getblk(dev, num);
 	
 	/* Valid buffer? */
 	if (buf->flags & BUFFER_VALID)
 		return (buf);
 	
-	kprintf("bread_Student valid buffer\n");
+	//kprintf("bread_Student valid buffer\n");
 	
 	bdev_readblk_student(buf);
 	
