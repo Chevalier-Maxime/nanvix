@@ -355,7 +355,7 @@ PUBLIC ssize_t file_read_student(struct inode *i, void *buf, size_t n, off_t off
 		if (blk == BLOCK_NULL)
 			goto out;
 		
-		//bbuf = bread(i->dev, blk);
+		bbuf = bread(i->dev, blk);
 		bread_Student(i->dev, blk);
 		if(blk2 != BLOCK_NULL){
 			//kprintf("Appel de breadStudent\n");
